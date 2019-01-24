@@ -13,4 +13,8 @@ public class UserService {
     public User getUser(){
         return userDao.getUser() ;
     }
+
+    public User getUserByName(String username){
+        return userDao.getUserByName(username) ;
+    }
 }

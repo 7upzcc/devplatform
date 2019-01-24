@@ -4,4 +4,8 @@
     <select id="getUser" resultType="com.syblackarrow.devplatform.Model.User">
         SELECT * FROM t_user LIMIT 1
     </select>
+
+    <select id="getUserByName" resultType="com.syblackarrow.devplatform.Model.User">
+        SELECT * FROM t_user WHERE username = #{username}
+    </select>
 </mapper>

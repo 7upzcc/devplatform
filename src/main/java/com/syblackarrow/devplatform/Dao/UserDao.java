@@ -7,4 +7,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserDao {
     User getUser() ;
+    User getUserByName(String username) ;
 }
