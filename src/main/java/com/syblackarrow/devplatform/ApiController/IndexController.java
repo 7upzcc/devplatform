@@ -1,6 +1,7 @@
 package com.syblackarrow.devplatform.ApiController;
 
 import com.alibaba.fastjson.JSON;
+import com.syblackarrow.devplatform.Core.ControllerReturn;
 import com.syblackarrow.devplatform.Model.User;
 import com.syblackarrow.devplatform.Service.RoleService;
 import com.syblackarrow.devplatform.Service.UserService;
@@ -8,7 +9,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +43,11 @@ public class IndexController {
         subject.login(token);
         List<String> roleList = roleService.getRoleListByUsername(username);
         if (roleList.contains("user")) {
-            return "欢迎登陆";
+            return ControllerReturn.SUCCESS("欢迎登陆");
         } else if (roleList.contains("admim")) {
-            return "欢迎来到管理员页面";
+            return ControllerReturn.SUCCESS("欢迎来到管理员页面");
         } else {
-            return "权限错误";
+            return ControllerReturn.FAIL("您没有登陆权限");
         }
     }
 }
