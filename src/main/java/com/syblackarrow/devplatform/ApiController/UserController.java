@@ -1,12 +1,31 @@
 package com.syblackarrow.devplatform.ApiController;
 
+import cn.hutool.json.JSONUtil;
+import com.syblackarrow.devplatform.Model.User;
+import com.syblackarrow.devplatform.Service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/user")
+@RestController
 public class UserController {
+
+    @Autowired
+    UserService userService ;
+
     @RequestMapping("/index")
-    public String userIndex(){
+    public String userIndex() {
         return " test ";
+    }
+
+    @RequestMapping("/api/user/getUserInfo")
+    @ResponseBody
+    public String getUserInfo(){
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.getUserInfoByName(subject.getPrincipal().toString()) ;
+        return  JSONUtil.toJsonStr(user);
     }
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component;
 public interface UserDao {
     User getUser() ;
     User getUserByName(String username) ;
+    User getUserInfoByName(String username) ;
 }
