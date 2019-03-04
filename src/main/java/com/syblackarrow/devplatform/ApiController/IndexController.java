@@ -42,8 +42,8 @@ public class IndexController {
 
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public String login(@RequestParam(required = true) String username, @RequestParam(required = true) String password) {
-        Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         Map<String,Object> userData = new HashMap<String,Object>() ;
         userData.put("token", token) ;

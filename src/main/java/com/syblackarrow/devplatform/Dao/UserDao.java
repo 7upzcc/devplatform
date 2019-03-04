@@ -9,4 +9,5 @@ public interface UserDao {
     User getUser() ;
     User getUserByName(String username) ;
     User getUserInfoByName(String username) ;
+    User getUserInfoById(String id) ;
 }

@@ -90,6 +90,18 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- reids -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.crazycake/shiro-redis -->
+		<dependency>
+			<groupId>org.crazycake</groupId>
+			<artifactId>shiro-redis</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
     </dependencies>
 
 	<build>

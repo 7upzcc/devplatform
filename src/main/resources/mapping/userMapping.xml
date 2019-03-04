@@ -18,4 +18,12 @@
         u.content AS content
         FROM t_user u WHERE username = #{username}
     </select>
+
+    <select id="getUserInfoById" resultType="com.syblackarrow.devplatform.Model.User">
+        SELECT
+        u.id AS id ,
+        u.username AS username ,
+        u.content AS content
+        FROM t_user u WHERE u.id = #{id}
+    </select>
 </mapper>

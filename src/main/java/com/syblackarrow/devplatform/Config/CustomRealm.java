@@ -24,26 +24,36 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        List<String> roleList = roleService.getRoleListByUsername(username);
-        Set<String> roleSet = new HashSet<>();
-        roleSet.addAll(roleList);
-        info.setRoles(roleSet);
-        return info;
+        Object principal = principalCollection.getPrimaryPrincipal();
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        if (principal instanceof User) {
+            User userLogin = (User) principal;
+            List<String> roles = roleService.getRoleListByUsername(userLogin.getUsername());
+            authorizationInfo.addRoles(roles);
+            //Set<String> permissions = userService.findPermissionsByUserId(userLogin.getId());
+            //authorizationInfo.addStringPermissions(permissions);
+        }
+        return authorizationInfo;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        User user = userService.getUserByName(token.getUsername());
-        if (user == null) {
-            throw new AccountException("用户不存在");
+        String name = token.getUsername();
+        String password = String.valueOf(token.getPassword());
+        User user = new User();
+        user.setUsername(name);
+        user.setPassword(password);
+        // 从数据库获取对应用户名密码的用户
+        User userList = userService.getUserByName(user.getUsername());
+        if (userList != null) {
+            SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                    userList.getUsername(), //用户
+                    userList.getPassword(), //密码
+                    getName()  //realm name
+            );
+            return authenticationInfo;
         }
-        if (!user.getPassword().equals(new String((char[]) token.getCredentials()))) {
-            throw new AccountException("密码不正确");
-        }
-        token.setRememberMe(true);
-        return new SimpleAuthenticationInfo(token.getPrincipal(), user.getPassword(), getName());
+        throw new UnknownAccountException();
     }
 }

@@ -24,8 +24,7 @@ public class UserController {
     @RequestMapping("/api/user/getUserInfo")
     @ResponseBody
     public String getUserInfo(){
-        Subject subject = SecurityUtils.getSubject();
-        User user = userService.getUserInfoByName(subject.getPrincipal().toString()) ;
-        return  JSONUtil.toJsonStr(user);
+        User userInfo = userService.getCurrentUser() ;
+        return  JSONUtil.toJsonStr(userInfo);
     }
 }
