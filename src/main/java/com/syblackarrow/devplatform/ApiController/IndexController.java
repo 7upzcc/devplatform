@@ -57,4 +57,10 @@ public class IndexController {
             return ControllerReturn.FAIL("您没有登陆权限");
         }
     }
+
+    //被踢出后跳转的页面
+    @RequestMapping(value = "/kickout", method = RequestMethod.GET)
+    public String kickOut() {
+        return "kickout";
+    }
 }

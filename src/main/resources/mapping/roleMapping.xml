@@ -7,4 +7,13 @@
         LEFT JOIN t_user u ON u.id = r.user_id
         WHERE u.username = #{username}
     </select>
+
+    <select id="getPermissionByRoleIds" resultType="java.util.Set">
+        SELECT p.permission AS permission
+        FROM t_permission p
+        WHERE p.role_id in
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+          #{id}
+        </foreach>
+    </select>
 </mapper>
