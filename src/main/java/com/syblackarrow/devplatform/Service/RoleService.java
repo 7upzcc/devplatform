@@ -17,7 +17,7 @@ public class RoleService {
         return roleDao.getRoleListByUsername(username) ;
     }
 
-    public Set<String> getPermissionByRoleIds(List<String> ids){
-        return roleDao.getPermissionByRoleIds(ids) ;
+    public Set<String> getPermissionByUsername(String username){
+        return roleDao.getPermissionByUsername(username) ;
     }
 }

@@ -1,6 +1,7 @@
 package com.syblackarrow.devplatform.ApiController;
 
 import cn.hutool.json.JSONUtil;
+import com.syblackarrow.devplatform.BaseController;
 import com.syblackarrow.devplatform.Model.User;
 import com.syblackarrow.devplatform.Service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     UserService userService ;
@@ -24,7 +25,7 @@ public class UserController {
 
     @RequestMapping("/api/user/getUserInfo")
     @ResponseBody
-    @RequiresPermissions("user")
+    @RequiresPermissions("pxuser")
     public String getUserInfo(){
         User userInfo = userService.getCurrentUser() ;
         return  JSONUtil.toJsonStr(userInfo);

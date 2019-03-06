@@ -9,5 +9,5 @@ import java.util.Set;
 @Component
 public interface RoleDao {
     List<String> getRoleListByUsername(@Param("username")String username) ;
-    Set<String> getPermissionByRoleIds(@Param("ids") List<String> ids) ;
+    Set<String> getPermissionByUsername(@Param("username")String username) ;
 }

@@ -55,12 +55,13 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Object principal = principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        System.out.println("=================   "+principal.getClass().getName()+"   =================");
+        if(principal instanceof User ){
             User userLogin = (User) principal;
             List<String> roles = roleService.getRoleListByUsername(userLogin.getUsername());
             authorizationInfo.addRoles(roles);
-            Set<String> permissions = roleService.getPermissionByRoleIds(roles) ;
+            Set<String> permissions = roleService.getPermissionByUsername(userLogin.getUsername()) ;
             authorizationInfo.addStringPermissions(permissions);
+        }
         return authorizationInfo;
     }
 

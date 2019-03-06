@@ -16,8 +16,8 @@ public class UserService {
      * @return 当前用户的对象，不包含密码信息
      */
     public User getCurrentUser(){
-        String username  = SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal().toString() ;
-        return getUserInfoByName(username) ;
+        User user  = (User)SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal() ;
+        return getUserInfoByName(user.getUsername()) ;
     }
 
     public User getUser(){
@@ -31,6 +31,7 @@ public class UserService {
     public User getUserInfoByName(String username){
         return userDao.getUserInfoByName(username) ;
     }
+
     public User getUserInfoById(String id){
         return userDao.getUserInfoById(id) ;
     }

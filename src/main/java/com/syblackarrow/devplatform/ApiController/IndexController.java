@@ -3,6 +3,7 @@ package com.syblackarrow.devplatform.ApiController;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
+import com.syblackarrow.devplatform.BaseController;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
 import com.syblackarrow.devplatform.Model.User;
 import com.syblackarrow.devplatform.Service.RoleService;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class IndexController {
+public class IndexController  extends BaseController {
 
 
     @Autowired
