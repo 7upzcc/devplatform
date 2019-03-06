@@ -3,7 +3,6 @@ package com.syblackarrow.devplatform.ApiController;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.syblackarrow.devplatform.BaseController;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
 import com.syblackarrow.devplatform.Model.User;
 import com.syblackarrow.devplatform.Service.RoleService;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +42,18 @@ public class IndexController  extends BaseController {
         return JSON.toJSONString(user);
     }
 
+    @RequestMapping(value="/api/autoLogin")
+    public String autoLogin(HttpServletRequest request, HttpServletResponse response) {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            return ControllerReturn.SUCCESS("自动登录成功") ;
+        }else{
+            return ControllerReturn.FAIL("自动登录失败") ;
+        }
+    }
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
     public String login(@RequestParam(required = true) String username, @RequestParam(required = true) String password) {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password,true);
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         Map<String,Object> userData = new HashMap<String,Object>() ;
@@ -57,6 +67,13 @@ public class IndexController  extends BaseController {
         } else {
             return ControllerReturn.FAIL("您没有登陆权限");
         }
+    }
+
+    @RequestMapping(value = "/api/logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return ControllerReturn.SUCCESS("登出成功") ;
     }
 
     //被踢出后跳转的页面

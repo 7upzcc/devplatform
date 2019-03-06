@@ -1,9 +1,13 @@
 package com.syblackarrow.devplatform.Config;
 
+import cn.hutool.core.codec.Base64;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
@@ -32,7 +36,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
         filterChainDefinitionMap.put("/api/login", "anon");
         filterChainDefinitionMap.put("/file/**", "roles[user]");
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/api/autoLogin", "anon");
+        filterChainDefinitionMap.put("/**", "user");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -45,7 +50,20 @@ public class ShiroConfig {
         securityManager.setCacheManager(cacheManager());
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
+        securityManager.setRememberMeManager(rememberManager());
         return securityManager;
+    }
+
+    @Bean
+    public RememberMeManager rememberManager(){
+        CookieRememberMeManager rememberMeManager = new CookieRememberMeManager() ;
+        byte[] cipherKey = Base64.decode("wGiHplamyXlVB11UXWol8g==");
+        rememberMeManager.setCipherKey(cipherKey);
+        SimpleCookie cookie = new SimpleCookie(CookieRememberMeManager.DEFAULT_REMEMBER_ME_COOKIE_NAME) ;
+        cookie.setHttpOnly(false);
+        cookie.setMaxAge(999);
+        rememberMeManager.setCookie(cookie);
+        return rememberMeManager ;
     }
 
     @Bean
