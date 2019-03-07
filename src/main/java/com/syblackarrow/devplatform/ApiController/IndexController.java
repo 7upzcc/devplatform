@@ -45,10 +45,12 @@ public class IndexController  extends BaseController {
     @RequestMapping(value="/api/autoLogin")
     public String autoLogin(HttpServletRequest request, HttpServletResponse response) {
         Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
+        if(subject.isAuthenticated()){
+            return ControllerReturn.SUCCESS("已经登录") ;
+        }else if(subject.isRemembered()){
             return ControllerReturn.SUCCESS("自动登录成功") ;
         }else{
-            return ControllerReturn.FAIL("自动登录失败") ;
+            return ControllerReturn.FAIL("自动登录验证失败") ;
         }
     }
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
