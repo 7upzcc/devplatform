@@ -24,7 +24,6 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresPermissions("puser")
     public String getUserInfo(){
-        User userInfo = userService.getCurrentUser() ;
-        return  JSONUtil.toJsonStr(userInfo);
+        return  JSONUtil.toJsonStr(userService.getCurrentUser());
     }
 }

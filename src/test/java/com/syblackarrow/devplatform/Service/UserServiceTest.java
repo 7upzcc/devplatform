@@ -13,7 +13,6 @@ public class UserServiceTest {
 
     @Test
     public void getCurrentUser() {
-        User user = userService.getCurrentUser() ;
-        System.out.println(user);
+        System.out.println(userService.getCurrentUser());
     }
 }

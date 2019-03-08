@@ -6,6 +6,9 @@ import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class UserService {
 
@@ -16,7 +19,7 @@ public class UserService {
      * 获得当前用户
      * @return 当前用户的对象，不包含密码信息
      */
-    public User getCurrentUser(){
+    public Map<String,Object> getCurrentUser(){
         User user  = (User)SecurityUtils.getSubject().getPrincipals().getPrimaryPrincipal() ;
         return getUserInfoByName(user.getUsername()) ;
     }
@@ -29,7 +32,7 @@ public class UserService {
         return userDao.getUserByName(username) ;
     }
 
-    public User getUserInfoByName(String username){
+    public Map<String,Object> getUserInfoByName(String username){
         return userDao.getUserInfoByName(username) ;
     }
 

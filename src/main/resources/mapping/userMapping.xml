@@ -12,12 +12,13 @@
         FROM t_user u WHERE username = #{username}
     </select>
 
-    <select id="getUserInfoByName" resultType="com.syblackarrow.devplatform.Model.User">
+    <select id="getUserInfoByName" resultType="java.util.HashMap">
         SELECT
         u.id AS id ,
         u.username AS username ,
         u.content AS content
         FROM t_user u WHERE username = #{username}
+        LIMIT 1
     </select>
 
     <select id="getUserInfoById" resultType="com.syblackarrow.devplatform.Model.User">
