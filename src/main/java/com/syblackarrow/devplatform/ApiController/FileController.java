@@ -2,6 +2,8 @@ package com.syblackarrow.devplatform.ApiController;
 
 import cn.hutool.core.io.FileUtil;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
+import com.syblackarrow.devplatform.Service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +15,11 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/file")
 public class FileController {
+
+    @Autowired
+    FileService fileService ;
     @RequestMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file){
-        File desFile = new File("/home/zhaocc/Public/"+file.getOriginalFilename()) ;
-        try {
-            FileUtil.writeBytes(file.getBytes(),desFile) ;
-        } catch (IOException e) {
-            return ControllerReturn.FAIL("上传失败："+e.getMessage()) ;
-        }
-        return ControllerReturn.SUCCESS("上传成功",desFile.getAbsolutePath()) ;
+        return fileService.fileUpload(file);
     }
 }

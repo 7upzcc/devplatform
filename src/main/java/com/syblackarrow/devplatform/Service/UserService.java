@@ -17,6 +17,12 @@ public class UserService {
 
     /**
      * 获得当前用户
+     * -----------------------------------
+     * 获得的用户信息包含以下字段，以后随需求增加
+     * 用户ID： id
+     * 用户名称（登录名）：username
+     * 用户描述信息：content
+     * ------------------------------------
      * @return 当前用户的对象，不包含密码信息
      */
     public Map<String,Object> getCurrentUser(){
