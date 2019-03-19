@@ -83,4 +83,9 @@ public class IndexController  extends BaseController {
     public String kickOut() {
         return "kickout";
     }
+
+    @RequestMapping(value="/saveUpload",method = RequestMethod.GET)
+    public String saveUpload(Map<String,Object> dataMap){
+        return ControllerReturn.SUCCESS("保存成功") ;
+    }
 }

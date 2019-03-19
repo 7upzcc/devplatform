@@ -39,4 +39,13 @@ public class FileService {
         }
         return ControllerReturn.SUCCESS("上传成功",desFile.getAbsolutePath()) ;
     }
+
+    /**
+     * 保存上传表单，通用方法。
+     * @param dataMap
+     * @return
+     */
+    public void saveUpload(Map dataMap){
+
+    }
 }

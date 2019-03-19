@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ControllerReturn {
 
     private ControllerReturnCode controllerReturnCode;
-    private String extendsMessage;
+    private String extendsMessage = null;
     private Object data;
 
     @Override
