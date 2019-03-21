@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
+import com.syblackarrow.devplatform.Core.ServiceReturn;
 import com.syblackarrow.devplatform.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,11 @@ public class FileService {
      * @param dataMap
      * @return
      */
-    public void saveUpload(Map dataMap){
-
+    public ServiceReturn saveUpload(Map dataMap){
+        String filename = (String)dataMap.get("filename") ;
+        String fileurl = (String) dataMap.get("fileurl") ;
+        Map<String,Object> userInfo  = userService.getCurrentUser() ;
+        String userId = (String) userInfo.get("id") ;
+        return ServiceReturn.SUCCESS("保存成功") ;
     }
 }

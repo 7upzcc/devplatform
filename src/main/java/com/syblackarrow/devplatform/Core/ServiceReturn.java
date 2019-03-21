@@ -63,8 +63,8 @@ public class ServiceReturn {
      * 其中自定义了成功消息的文本
      * ---------------------------------------------
      */
-    public static String SUCCESS(String message) {
-        return ServiceReturn.getServiceReturn(ServiceReturnCode.SUCCESS, message, null).toString();
+    public static ServiceReturn SUCCESS(String message) {
+        return ServiceReturn.getServiceReturn(ServiceReturnCode.SUCCESS, message, null);
     }
 
     /*
@@ -74,8 +74,8 @@ public class ServiceReturn {
      * 其中自定义了成功消息的文本和一个自定义的返回对象
      * ---------------------------------------------
      */
-    public static String SUCCESS(String message, Object data) {
-        return ServiceReturn.getServiceReturn(ServiceReturnCode.SUCCESS, message, data).toString();
+    public static ServiceReturn SUCCESS(String message, Object data) {
+        return ServiceReturn.getServiceReturn(ServiceReturnCode.SUCCESS, message, data);
     }
 
     /*
@@ -85,8 +85,8 @@ public class ServiceReturn {
      * 其中自定义了失败消息的文本
      * ---------------------------------------------
      */
-    public static String FAIL(String message) {
-        return ServiceReturn.getServiceReturn(ServiceReturnCode.FAIL, message, null).toString();
+    public static ServiceReturn FAIL(String message) {
+        return ServiceReturn.getServiceReturn(ServiceReturnCode.FAIL, message, null);
     }
 
     /*
@@ -96,7 +96,7 @@ public class ServiceReturn {
      * 其中自定义了失败消息的文本和一个自定义的返回对象
      * ---------------------------------------------
      */
-    public static String FAIL(String message, Object data) {
-        return ServiceReturn.getServiceReturn(ServiceReturnCode.FAIL, message, data).toString();
+    public static ServiceReturn FAIL(String message, Object data) {
+        return ServiceReturn.getServiceReturn(ServiceReturnCode.FAIL, message, data);
     }
 }
