@@ -17,22 +17,24 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/file")
-public class FileController {
+public class FileController extends BaseController {
 
     @Autowired
-    FileService fileService ;
+    FileService fileService;
+
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file){
+    public String upload(@RequestParam("file") MultipartFile file) {
+        System.out.println("==================开始上传文件=====================");
         return fileService.fileUpload(file);
     }
 
     @RequestMapping("/submit")
-    public String submit(Map dataMap){
-        ServiceReturn sr = fileService.saveUpload(dataMap) ;
-        if(sr.getServiceReturnCode() == ServiceReturnCode.SUCCESS){
-            return ControllerReturn.SUCCESS("保存成功") ;
-        }else{
-            return ControllerReturn.FAIL("保存失败") ;
+    public String submit(@RequestParam("dataJson")String dataJson) {
+        ServiceReturn sr = fileService.saveUpload(dataJson);
+        if (sr.getServiceReturnCode() == ServiceReturnCode.SUCCESS) {
+            return ControllerReturn.SUCCESS("保存成功");
+        } else {
+            return ControllerReturn.FAIL("保存失败");
         }
 
     }

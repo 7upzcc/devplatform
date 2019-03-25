@@ -43,12 +43,13 @@ public class FileService {
 
     /**
      * 保存上传表单，通用方法。
-     * @param dataMap
+     * @param dataJson //包含了数据的一个json字符串
      * @return
      */
-    public ServiceReturn saveUpload(Map dataMap){
-        String filename = (String)dataMap.get("filename") ;
-        String fileurl = (String) dataMap.get("fileurl") ;
+    public ServiceReturn saveUpload(String dataJson){
+        JSONObject data = JSONUtil.parseObj(dataJson) ;
+        String filename = data.getStr("filename") ;
+        String fileurl = data.getStr("fileurl") ;
         Map<String,Object> userInfo  = userService.getCurrentUser() ;
         String userId = (String) userInfo.get("id") ;
         return ServiceReturn.SUCCESS("保存成功") ;
