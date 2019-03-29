@@ -1,6 +1,7 @@
 package com.syblackarrow.devplatform.Dao;
 
 import com.syblackarrow.devplatform.Model.User;
+import com.syblackarrow.devplatform.Model.UserSettings;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface UserDao {
     User getUserByName(String username) ;
     Map<String,Object> getUserInfoByName(String username) ;
     User getUserInfoById(String id) ;
+    List<UserSettings> getUserSettingsByUserId(String userId) ;
 }

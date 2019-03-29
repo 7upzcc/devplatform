@@ -7,6 +7,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
 import com.syblackarrow.devplatform.Core.ServiceReturn;
 import com.syblackarrow.devplatform.Model.User;
+import com.syblackarrow.devplatform.Model.UserSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,11 +48,29 @@ public class FileService {
      * @return
      */
     public ServiceReturn saveUpload(String dataJson){
+        //1. 验证用户是否有上传资格
+        if(!userService.getUserUploadSetting()) return ServiceReturn.FAIL("你没有上传资格") ;
+        //2. 验证用户当前目录是否超限
+        if(isFileSizeOverRange()) return ServiceReturn.FAIL("你的空间已经用尽") ;
         JSONObject data = JSONUtil.parseObj(dataJson) ;
         String filename = data.getStr("filename") ;
         String fileurl = data.getStr("fileurl") ;
         Map<String,Object> userInfo  = userService.getCurrentUser() ;
         String userId = (String) userInfo.get("id") ;
         return ServiceReturn.SUCCESS("保存成功") ;
+    }
+
+    /**
+     * 判断用户目录的文件大小是否超限
+     * @return
+     */
+    public boolean isFileSizeOverRange(){
+        File userFilePath = new File("/home"+File.separator+"upload"+File.separator+userService.getCurrentUserId()) ;
+        if(userFilePath.exists()){
+            long filesize = FileUtil.size(userFilePath) ;
+            return (userService.getUserFileSize()*1024 < filesize) ;
+        }else{
+            return false ;
+        }
     }
 }

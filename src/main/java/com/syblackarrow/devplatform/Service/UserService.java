@@ -1,7 +1,10 @@
 package com.syblackarrow.devplatform.Service;
 
+import com.alibaba.druid.util.StringUtils;
+import com.syblackarrow.devplatform.Core.UserSettingsCode;
 import com.syblackarrow.devplatform.Dao.UserDao;
 import com.syblackarrow.devplatform.Model.User;
+import com.syblackarrow.devplatform.Model.UserSettings;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,14 @@ public class UserService {
         return getUserInfoByName(user.getUsername()) ;
     }
 
+    /**
+     * 获得当前用户的ID
+     * @return 当前用户的ID
+     */
+    public String getCurrentUserId(){
+        return (String)getCurrentUser().get("id") ;
+    }
+
     public User getUser(){
         return userDao.getUser() ;
     }
@@ -44,5 +55,42 @@ public class UserService {
 
     public User getUserInfoById(String id){
         return userDao.getUserInfoById(id) ;
+    }
+
+    /**
+     * 获得用户的设置信息
+     * @return
+     */
+    public List<UserSettings> getUserSettings(){
+        String userId = getCurrentUserId() ;
+        return userDao.getUserSettingsByUserId(userId) ;
+    }
+
+    /**
+     * 获得用户上传设置信息
+     * @return 判断结果
+     */
+    public boolean getUserUploadSetting(){
+        List<UserSettings> userSettingsList = getUserSettings() ;
+        for(UserSettings userSettings : userSettingsList){
+            if(userSettings.getSettingKey().equals(UserSettingsCode.IS_UPLOAD.getName())){
+                return ( !StringUtils.isEmpty(userSettings.getSettingValue()) && userSettings.getSettingValue().equals("1") ) ;
+            }
+        }
+        return false ;
+    }
+
+    /**
+     * 获得用户的目录限制大小
+     * @return 目录大小，单位MB
+     */
+    public Integer getUserFileSize(){
+        List<UserSettings> userSettingsList = getUserSettings() ;
+        for(UserSettings userSettings : userSettingsList){
+            if(userSettings.getSettingKey().equals(UserSettingsCode.FILE_SIZE.getName())){
+               return Integer.parseInt(userSettings.getSettingValue()) ;
+            }
+        }
+        return 0 ;
     }
 }

@@ -13,6 +13,6 @@ public class UserServiceTest {
 
     @Test
     public void getCurrentUser() {
-        System.out.println(userService.getCurrentUser());
+        //System.out.println(userService.getCurrentUser());
     }
 }

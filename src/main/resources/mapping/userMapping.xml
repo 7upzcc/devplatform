@@ -28,4 +28,13 @@
         u.content AS content
         FROM t_user u WHERE u.id = #{id}
     </select>
+
+    <select id="getUserSettingsByUserId" resultType="com.syblackarrow.devplatform.Model.UserSettings">
+        SELECT
+        s.id AS id ,
+        s.user_id AS userId ,
+        s.setting_key AS settingKey ,
+        s.setting_value AS settingValue
+        FROM t_user_settings s WHERE s.user_id = #{userId}
+    </select>
 </mapper>
