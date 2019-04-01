@@ -34,7 +34,7 @@ public class FileController extends BaseController {
         if (sr.getServiceReturnCode() == ServiceReturnCode.SUCCESS) {
             return ControllerReturn.SUCCESS("保存成功");
         } else {
-            return ControllerReturn.FAIL("保存失败");
+            return ControllerReturn.FAIL(sr.getExtendsMessage());
         }
 
     }

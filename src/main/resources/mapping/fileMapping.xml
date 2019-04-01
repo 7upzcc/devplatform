@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.syblackarrow.devplatform.Dao.FileDao">
     <insert id="saveUpload" parameterType="com.syblackarrow.devplatform.Model.FileUpload">
-        INSERT INTO file_upload
+        INSERT INTO t_file_upload (id , user_id , file_name , file_upload_url , password ,upload_date , last_open_date , last_download_date)
+        VALUE (#{id} , #{userId} , #{filename} , #{fileUploadUrl} , #{password} , now() , now() , now() )
     </insert>
 </mapper>
