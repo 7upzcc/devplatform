@@ -38,4 +38,13 @@ public class FileController extends BaseController {
         }
 
     }
+    @RequestMapping("/getFiles")
+    public String getFiles(@RequestParam("page")Integer page){
+        ServiceReturn sr = fileService.getFiles(page) ;
+        if(sr.getServiceReturnCode()==ServiceReturnCode.SUCCESS){
+            return ControllerReturn.SUCCESS("查询成功",sr.getData()) ;
+        }else{
+            return ControllerReturn.FAIL("查询失败") ;
+        }
+    }
 }

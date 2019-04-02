@@ -93,4 +93,18 @@ public class FileService {
             return false;
         }
     }
+
+    /**
+     * 查询当前用户的所有文件，分页返回
+     * @return 返回json
+     */
+    public ServiceReturn getFiles(Integer page){
+        Integer start = 0 ;
+        Integer end = 0 ;
+        Integer pageCount = 10 ;
+        start = (page - 1) * pageCount ;
+        end = page * pageCount - 1 ;
+        List<FileUpload> fileUploads = fileDao.getCurrentUserFiles(userService.getCurrentUserId() , start , end ) ;
+        return ServiceReturn.SUCCESS("查询成功",fileUploads) ;
+    }
 }
