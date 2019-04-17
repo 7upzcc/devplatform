@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -106,5 +107,18 @@ public class FileService {
         end = page * pageCount - 1 ;
         List<FileUpload> fileUploads = fileDao.getCurrentUserFiles(userService.getCurrentUserId() , start , end ) ;
         return ServiceReturn.SUCCESS("查询成功",fileUploads) ;
+    }
+
+    /**
+     * 根据ID查找需要的文件，返回文件对象
+     * @param id
+     * @return
+     */
+    public Map<String,Object> getFile(String id){
+        Map<String,Object> downloadInfo = new HashMap<String,Object>() ;
+        FileUpload fileUpload = fileDao.getFileUpload(id) ;
+        downloadInfo.put("file",new File(fileUpload.getFileUploadUrl())) ;
+        downloadInfo.put("filename",fileUpload.getFilename()+"."+fileUpload.getFileUploadUrl().split("\\.")[1]) ;
+        return downloadInfo ;
     }
 }

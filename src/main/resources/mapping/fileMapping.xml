@@ -11,12 +11,24 @@
         f.id AS id ,
         f.user_id AS userId ,
         f.file_name AS filename ,
-        f.file_upload_url AS fileUploadUrl ,
         f.upload_date AS uploadDate ,
         f.last_open_date AS lastOpenDate ,
         f.last_download_date AS lastDownloadDate
         FROM t_file_upload f
         WHERE f.user_id = #{userId}
         LIMIT #{start} , #{end}
+    </select>
+
+    <select id="getFileUpload" resultType="com.syblackarrow.devplatform.Model.FileUpload">
+        SELECT
+        f.id AS id ,
+        f.user_id AS userId ,
+        f.file_name AS filename ,
+        f.file_upload_url AS fileUploadUrl ,
+        f.upload_date AS uploadDate ,
+        f.last_open_date AS lastOpenDate ,
+        f.last_download_date AS lastDownloadDate
+        FROM t_file_upload f
+        WHERE f.id = #{id}
     </select>
 </mapper>

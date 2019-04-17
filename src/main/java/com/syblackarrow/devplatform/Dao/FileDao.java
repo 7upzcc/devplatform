@@ -9,4 +9,5 @@ import java.util.List;
 public interface FileDao {
     public void saveUpload(FileUpload fileUpload) ;
     public List<FileUpload> getCurrentUserFiles(String userId , Integer start , Integer end) ;
+    public FileUpload getFileUpload(String id) ;
 }
