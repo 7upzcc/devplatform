@@ -31,6 +31,7 @@ public class FileController extends BaseController {
 
     @RequestMapping("/submit")
     public String submit(@RequestParam("dataJson")String dataJson) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+dataJson);
         ServiceReturn sr = fileService.saveUpload(dataJson);
         if (sr.getServiceReturnCode() == ServiceReturnCode.SUCCESS) {
             return ControllerReturn.SUCCESS("保存成功");
