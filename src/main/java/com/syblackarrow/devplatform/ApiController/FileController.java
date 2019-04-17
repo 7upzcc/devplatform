@@ -78,4 +78,15 @@ public class FileController extends BaseController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping("delFile")
+    @ResponseBody
+    public String delFile(@RequestParam("id") String id){
+        ServiceReturn sr = fileService.delFiles(id) ;
+        if(sr.getServiceReturnCode().equals(ServiceReturnCode.SUCCESS)){
+            return ControllerReturn.SUCCESS("删除成功") ;
+        }else{
+            return ControllerReturn.FAIL(sr.getExtendsMessage()) ;
+        }
+    }
 }

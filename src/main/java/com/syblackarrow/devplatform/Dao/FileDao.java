@@ -10,4 +10,6 @@ public interface FileDao {
     public void saveUpload(FileUpload fileUpload) ;
     public List<FileUpload> getCurrentUserFiles(String userId , Integer start , Integer end) ;
     public FileUpload getFileUpload(String id) ;
+    public void delFile(String id , String userId) ;
+    public Integer getFileOrder(String id , String userId) ;
 }

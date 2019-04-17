@@ -7,6 +7,7 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.syblackarrow.devplatform.Core.ControllerReturn;
 import com.syblackarrow.devplatform.Core.ServiceReturn;
+import com.syblackarrow.devplatform.Core.ServiceReturnCode;
 import com.syblackarrow.devplatform.Dao.FileDao;
 import com.syblackarrow.devplatform.Model.FileUpload;
 import com.syblackarrow.devplatform.Model.User;
@@ -120,5 +121,52 @@ public class FileService {
         downloadInfo.put("file",new File(fileUpload.getFileUploadUrl())) ;
         downloadInfo.put("filename",fileUpload.getFilename()+"."+fileUpload.getFileUploadUrl().split("\\.")[1]) ;
         return downloadInfo ;
+    }
+
+    /**
+     * 根据ID删除文件
+     * @param id
+     * @return
+     */
+    public ServiceReturn delFiles(String id){
+        //0. 获得当前用户
+        JSONObject userInfo = JSONUtil.parseObj(userService.getCurrentUser());
+        String userId = userInfo.getStr("id");
+        if (StringUtils.isEmpty(userId)) {
+            return null;
+        }
+        //查询当前用户是否是文件的所有者
+        ServiceReturn orderResult = isFileOrder(id) ;
+        if(orderResult.getServiceReturnCode().equals(ServiceReturnCode.SUCCESS)){
+            //获得文件信息
+            FileUpload fileUpload = fileDao.getFileUpload(id) ;
+            //1. 删除数据库
+            fileDao.delFile(id , userId) ;
+            //2. 删除文件
+            FileUtil.del(fileUpload.getFileUploadUrl()) ;
+            return ServiceReturn.SUCCESS("删除成功") ;
+        }else{
+            return ServiceReturn.FAIL("删除失败，你不是文件的所有者") ;
+        }
+
+    }
+
+    /**
+     * 查询当前用户是否是目标文件的所有者
+     * @param id
+     * @return
+     */
+    public ServiceReturn isFileOrder(String id){
+        JSONObject userInfo = JSONUtil.parseObj(userService.getCurrentUser());
+        String userId = userInfo.getStr("id");
+        if (StringUtils.isEmpty(userId)) {
+            return ServiceReturn.FAIL("查询用户失败");
+        }
+        Integer result = fileDao.getFileOrder(id , userId) ;
+        if(result > 0){
+            return ServiceReturn.SUCCESS("是文件所有者") ;
+        }else{
+            return ServiceReturn.FAIL("不是文件的所有者") ;
+        }
     }
 }
