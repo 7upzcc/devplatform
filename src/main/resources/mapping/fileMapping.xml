@@ -34,11 +34,11 @@
 
     <select id="getFileOrder" resultType="java.lang.Integer">
         SELECT COUNT(*)
-        FROM t_file_upload f
+        FROM t_file_upload AS f
         WHERE f.id = #{id} AND f.user_id = #{userId}
     </select>
 
     <delete id="delFile">
-        DELETE FROM t_file_upload f WHERE  f.id = #{id} AND f.user_id = #{userId}
+        DELETE FROM t_file_upload WHERE id = #{id} AND user_id = #{userId}
     </delete>
 </mapper>
